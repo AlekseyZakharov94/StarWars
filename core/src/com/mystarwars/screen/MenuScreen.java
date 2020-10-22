@@ -2,46 +2,65 @@ package com.mystarwars.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mystarwars.base.BaseScreen;
+import com.mystarwars.math.Rect;
+import com.mystarwars.sprite.Background;
+import com.mystarwars.sprite.Logo;
 
 public class MenuScreen extends BaseScreen {
+
+    private Background background;
+    private Texture bg;
+    private Logo logo;
     private Texture img;
     private Vector2 imgV;
-    private Vector2 pointV;
-    private Vector2 v;
+    private Vector2 tmpTouch;
 
 
     @Override
     public void show() {
         super.show();
-        img = new Texture("badlogic.jpg");
+        bg = new Texture("textures/background.jpg");
+        background = new Background(new TextureRegion(bg));
+        img = new Texture("textures\\badlogic.jpg");
+        logo = new Logo(new TextureRegion(img));
         imgV = new Vector2();
-        pointV = new Vector2();
-        v = new Vector2();
+        tmpTouch = new Vector2();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         batch.begin();
-        batch.draw(img, imgV.x, imgV.y);
-        batch.end();
-        imgV.add(v);
-        if(pointV.cpy().sub(imgV).len() < v.len()){
-            v.setZero();
+        background.draw(batch);
+        logo.draw(batch);
+        logo.startMoving(imgV);
+        if (tmpTouch.cpy().sub(logo.pos).len() < imgV.len()){
+            imgV.setZero();
         }
+        batch.end();
+    }
+
+    @Override
+    public void resize(Rect worldBounds) {
+        background.resize(worldBounds);
+        logo.resize(worldBounds);
     }
 
     @Override
     public void dispose() {
+        bg.dispose();
         super.dispose();
     }
 
+
+
     @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        pointV.set(screenX, Gdx.graphics.getHeight() - screenY);
-        v.set(pointV.cpy().sub(imgV).nor());
-                return false;
+    public boolean touchDown(Vector2 touch, int pointer, int button) {
+       imgV.set(touch.cpy().sub(logo.pos).scl(0.01f));
+       tmpTouch.set(touch);
+       return false;
     }
 }
