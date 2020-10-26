@@ -1,11 +1,14 @@
 package com.mystarwars.screen;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mystarwars.base.BaseScreen;
 import com.mystarwars.math.Rect;
 import com.mystarwars.sprite.Background;
+import com.mystarwars.sprite.Ship;
 import com.mystarwars.sprite.Star;
 
 public class GameScreen extends BaseScreen {
@@ -14,9 +17,11 @@ public class GameScreen extends BaseScreen {
 
     private TextureAtlas atlas;
     private Texture bg;
+    private Texture shipTexture;
 
     private Background background;
     private Star[] stars;
+    private Ship ship;
 
     @Override
     public void show() {
@@ -29,6 +34,10 @@ public class GameScreen extends BaseScreen {
         for (int i = 0; i < STAR_COUNT; i++) {
             stars[i] = new Star(atlas);
         }
+//        shipTexture = atlas.findRegion("main_ship").getTexture();
+        ship = new Ship(atlas);
+//        ship = new Ship(new TextureRegion(shipTexture, 0,0, shipTexture.getWidth()/2, shipTexture.getHeight()));
+
     }
 
     @Override
@@ -46,6 +55,7 @@ public class GameScreen extends BaseScreen {
         for (Star star: stars) {
             star.resize(worldBounds);
         }
+        ship.resize(worldBounds);
     }
 
     @Override
@@ -91,6 +101,7 @@ public class GameScreen extends BaseScreen {
         for (Star star : stars) {
             star.draw(batch);
         }
+        ship.draw(batch);
         batch.end();
     }
 }
