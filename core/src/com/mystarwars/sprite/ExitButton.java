@@ -15,9 +15,9 @@ public class ExitButton extends BaseButton {
 
     @Override
     public void resize(Rect worldBounds) {
-       setHeightProportion(0.2f);
-       setRight(worldBounds.getRight() - MARGIN);
-       setBottom(worldBounds.getBottom() + MARGIN);
+        setHeightProportion(0.2f);
+        setRight(worldBounds.getRight() - MARGIN);
+        setBottom(worldBounds.getBottom() + MARGIN);
     }
 
     @Override
