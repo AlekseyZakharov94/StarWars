@@ -12,11 +12,11 @@ import com.mystarwars.math.MatrixUtils;
 import com.mystarwars.math.Rect;
 
 
-public class BaseScreen implements Screen, InputProcessor {
+public abstract class BaseScreen implements Screen, InputProcessor {
 
     protected SpriteBatch batch;
     private Rect screenBounds;
-    private Rect worldBounds;
+    protected Rect worldBounds;
     private Rect glBounds;
     private Matrix4 worldToGl;
     private Matrix3 screenToWorld;
