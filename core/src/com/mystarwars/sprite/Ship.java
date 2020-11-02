@@ -1,6 +1,8 @@
 package com.mystarwars.sprite;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +14,9 @@ public class Ship extends Sprite {
 
     private static final float SHIP_HEIGHT = 0.15f;
     private static final float MARGIN = 0.05f;
+    private static final float FIRE_RATE = 60;
+    private static float timeWithoutFire = 0;
+
 
     private static final int INVALID_POINTER = -1;
 
@@ -29,6 +34,8 @@ public class Ship extends Sprite {
 
     private int leftPointer = INVALID_POINTER;
     private int rightPointer = INVALID_POINTER;
+
+    private static final Sound FIRE_SOUND = Gdx.audio.newSound(Gdx.files.internal("sounds\\bullet.wav"));
 
     public Ship(TextureAtlas atlas, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
@@ -53,23 +60,28 @@ public class Ship extends Sprite {
 //            setLeft(worldBounds.getLeft());
 //            stop();
 //        }
-        if (getLeft() > worldBounds.getRight()){
+        if (getLeft() > worldBounds.getRight()) {
             setRight(worldBounds.getLeft());
-        }else if (getRight() < worldBounds.getLeft()){
+        } else if (getRight() < worldBounds.getLeft()) {
             setLeft(worldBounds.getRight());
+        }
+        timeWithoutFire += delta;
+        if (timeWithoutFire >= FIRE_RATE) {
+            shot();
+            timeWithoutFire = 0;
         }
     }
 
     @Override
     public boolean touchDown(Vector2 touch, int pointer, int button) {
         if (touch.x < worldBounds.pos.x) {
-            if(leftPointer != INVALID_POINTER){
+            if (leftPointer != INVALID_POINTER) {
                 return false;
             }
             leftPointer = pointer;
             moveLeft();
         } else {
-            if (rightPointer != INVALID_POINTER){
+            if (rightPointer != INVALID_POINTER) {
                 return false;
             }
             rightPointer = pointer;
@@ -87,11 +99,11 @@ public class Ship extends Sprite {
             } else {
                 stop();
             }
-        } else if (pointer == rightPointer){
+        } else if (pointer == rightPointer) {
             rightPointer = INVALID_POINTER;
-            if (leftPointer != INVALID_POINTER){
+            if (leftPointer != INVALID_POINTER) {
                 moveLeft();
-            }else {
+            } else {
                 stop();
             }
         }
@@ -154,10 +166,12 @@ public class Ship extends Sprite {
         v.setZero();
     }
 
-    private void shot(){
+    private void shot() {
         Bullet bullet = bulletPool.obtain();
         bulletPos.set(pos.x, getTop());
-        bullet.set(this, bulletRegion, bulletPos, bulletV,  worldBounds, 1, 0.02f);
+        bullet.set(this, bulletRegion, bulletPos, bulletV, worldBounds, 1, 0.02f);
+        FIRE_SOUND.play(1.0f);
     }
+
 }
 
