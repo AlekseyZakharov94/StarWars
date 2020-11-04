@@ -41,8 +41,8 @@ public class EnemyEmitter {
     private final Vector2 enemyMediumV = new Vector2(0f, -0.0003f);
     private final Vector2 enemyMediumBulletV = new Vector2(0f, -0.0025f);
 
-    private final Vector2 enemyBigV = new Vector2(0f, -0.0001f);
-    private final Vector2 enemyBigBulletV = new Vector2(0f, -0.001f);
+    private final Vector2 enemyBigV = new Vector2(0f, -0.0005f);
+    private final Vector2 enemyBigBulletV = new Vector2(0f, -0.0025f);
 
     private Rect worldBounds;
     private EnemyShipPool enemyShipPool;
@@ -69,15 +69,15 @@ public class EnemyEmitter {
             generateTimer = 0;
             EnemyShip enemyShip = enemyShipPool.obtain();
             float type = (float) Math.random();
-            if (type < 0.5f){
+            if (type < 0.6f) {
                 enemyShip.set(enemySmallRegions, enemySmallV, bulletRegion, ENEMY_SMALL_BULLET_HEIGHT,
                         enemySmallBulletV, bulletSound, ENEMY_SMALL_DAMAGE, ENEMY_SMALL_RELOAD_INTERVAL,
                         ENEMY_SMALL_HEIGHT, ENEMY_SMALL_HP);
-            }else if(type < 0.8f){
+            } else if (type < 0.9f) {
                 enemyShip.set(enemyMediumRegions, enemyMediumV, bulletRegion, ENEMY_MEDIUM_BULLET_HEIGHT,
                         enemyMediumBulletV, bulletSound, ENEMY_MEDIUM_DAMAGE, ENEMY_MEDIUM_RELOAD_INTERVAL,
                         ENEMY_MEDIUM_HEIGHT, ENEMY_MEDIUM_HP);
-            }else {
+            } else {
                 enemyShip.set(enemyBigRegions, enemyBigV, bulletRegion, ENEMY_BIG_BULLET_HEIGHT,
                         enemyBigBulletV, bulletSound, ENEMY_BIG_DAMAGE, ENEMY_BIG_RELOAD_INTERVAL,
                         ENEMY_BIG_HEIGHT, ENEMY_BIG_HP);
