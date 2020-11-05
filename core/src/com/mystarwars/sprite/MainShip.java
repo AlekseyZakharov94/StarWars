@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mystarwars.base.Ship;
 import com.mystarwars.math.Rect;
 import com.mystarwars.pool.BulletPool;
+import com.mystarwars.pool.ExplosionPool;
 
 public class MainShip extends Ship {
 
@@ -24,8 +25,9 @@ public class MainShip extends Ship {
     private int rightPointer = INVALID_POINTER;
 
 
-    public MainShip(TextureAtlas atlas, BulletPool bulletPool) {
+    public MainShip(TextureAtlas atlas, ExplosionPool explosionPool, BulletPool bulletPool) {
         super(atlas.findRegion("main_ship"), 1, 2, 2);
+        this.explosionPool = explosionPool;
         this.bulletPool = bulletPool;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds\\laser.wav"));
@@ -148,6 +150,11 @@ public class MainShip extends Ship {
 
     public void dispose() {
         bulletSound.dispose();
+    }
+
+    public boolean isBulletCollision(Rect bullet){
+        return !(bullet.getRight() < getLeft() || bullet.getLeft() > getRight()
+                || bullet.getBottom() > pos.y || bullet.getTop() < getBottom());
     }
 
 }

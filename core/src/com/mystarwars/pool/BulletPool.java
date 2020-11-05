@@ -1,6 +1,5 @@
 package com.mystarwars.pool;
 
-import com.mystarwars.base.Sprite;
 import com.mystarwars.base.SpritesPool;
 import com.mystarwars.sprite.Bullet;
 

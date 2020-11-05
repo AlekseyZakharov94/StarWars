@@ -15,6 +15,7 @@ public class Regions {
             for (int j = 0; j < cols; j++) {
                 regions[frame] = new TextureRegion(region, titleWidth * j, titleHeight * i, titleWidth, titleHeight);
                 if (frame == frames - 1) return regions;
+                frame++;
             }
         }
         return regions;
