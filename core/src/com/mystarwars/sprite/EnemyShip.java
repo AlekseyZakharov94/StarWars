@@ -10,7 +10,7 @@ import com.mystarwars.pool.ExplosionPool;
 
 public class EnemyShip extends Ship {
 
-    private static final float START_Y_BOOSTER = -0.05f;
+    private static final float START_Y_BOOSTER = -0.5f;
 
     public EnemyShip(BulletPool bulletPool, ExplosionPool explosionPool, Rect worldBounds) {
         this.bulletPool = bulletPool;

@@ -7,7 +7,7 @@ import com.mystarwars.base.Sprite;
 
 public class Explosion extends Sprite {
 
-    private static final float ANIMATE_INTERVAL = 0.9f;
+    private static final float ANIMATE_INTERVAL = 0.01f;
 
     private float animateTimer;
     private Sound explosinSound;

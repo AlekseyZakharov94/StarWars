@@ -13,8 +13,8 @@ public class MainShip extends Ship {
 
     private static final float SHIP_HEIGHT = 0.15f;
     private static final float MARGIN = 0.05f;
-    private static final float RELOAD_INTERVAL = 20;
-    private static final int HP = 100;
+    private static final float RELOAD_INTERVAL = 0.2f;
+    private static final int HP = 10;
 
     private static final int INVALID_POINTER = -1;
 
@@ -31,12 +31,23 @@ public class MainShip extends Ship {
         this.bulletPool = bulletPool;
         this.bulletRegion = atlas.findRegion("bulletMainShip");
         this.bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds\\laser.wav"));
-        v0.set(0.02f, 0);
-        bulletV.set(0, 0.02f);
+        v0.set(0.2f, 0);
+        bulletV.set(0, 0.5f);
         this.bulletHeight = 0.02f;
         this.damage = 1;
         this.reloadInterval = RELOAD_INTERVAL;
         this.hp = HP;
+    }
+
+    public void startNewGame(Rect worldBounds){
+        this.hp = HP;
+        this.pos.x = worldBounds.pos.x;
+        pressedLeft = false;
+        pressedRight = false;
+        leftPointer = INVALID_POINTER;
+        rightPointer = INVALID_POINTER;
+        stop();
+        flushDestroy();
     }
 
     @Override
@@ -92,7 +103,6 @@ public class MainShip extends Ship {
                 stop();
             }
         }
-
         return false;
     }
 
