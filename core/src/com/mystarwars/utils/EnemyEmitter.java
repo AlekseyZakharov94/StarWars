@@ -50,6 +50,12 @@ public class EnemyEmitter {
     private TextureRegion bulletRegion;
     private float generateTimer;
 
+    private int level = 1;
+
+    public int getLevel() {
+        return level;
+    }
+
     public EnemyEmitter(Rect worldBounds, EnemyShipPool enemyShipPool, Sound bulletSound, TextureAtlas atlas) {
         this.worldBounds = worldBounds;
         this.enemyShipPool = enemyShipPool;
@@ -63,7 +69,8 @@ public class EnemyEmitter {
         enemyBigRegions = Regions.split(enemy2, 1, 2, 2);
     }
 
-    public void generate(float delta) {
+    public void generate(float delta, int frags) {
+        level = frags / 10 + 1;
         generateTimer += delta;
         if (generateTimer >= GENERATE_INTERVAL) {
             generateTimer = 0;
