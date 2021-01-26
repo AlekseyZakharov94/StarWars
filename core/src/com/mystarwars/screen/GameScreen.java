@@ -25,6 +25,8 @@ import com.mystarwars.utils.Font;
 
 import java.util.List;
 
+// Завершенный проект
+
 public class GameScreen extends BaseScreen {
 
     private static final int STAR_COUNT = 64;
